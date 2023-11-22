@@ -1,1 +1,1 @@
-# Objektinis-Programavimas-v2
+# Objektinis-programavimas
