@@ -3,21 +3,18 @@
 #include <chrono>
 #include <iomanip>
 #include <vector>
-#include <list>
 
 int main() {
     std::vector<Student> studentsVector;
-    std::list<Student> studentsList;
-    std::vector<Student> dummiesVector, smartVector;
-    std::list<Student> dummiesList, smartList;
+    std::vector<Student> dummiesVector;
 
-    std::chrono::time_point<std::chrono::high_resolution_clock> start, end, startVector, endVector, startList, endList;
-    std::chrono::duration<double> readingDuration, vectorDuration, listDuration;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
+    std::chrono::duration<double> readingDuration, vectorDuration;
 
     std::cout << "Would you like to: \n"
         << "1. Input data manually \n"
         << "2. Read data from a file \n"
-        << "3. Generate a random student list file\n"
+        << "3. Generate a random student file\n"
         << "Choose an option (1/2/3): ";
     int choice;
     std::cin >> choice;
@@ -26,14 +23,12 @@ int main() {
     start = std::chrono::high_resolution_clock::now();
     switch (choice) {
     case 1:
-        inputStudentsManually(studentsVector);
-        studentsList.assign(studentsVector.begin(), studentsVector.end());
+        StudentDataInput::inputStudentsManually(studentsVector);
         break;
     case 2:
         std::cout << "Enter the filename to read from (including extension, e.g., 'data.txt'): ";
         std::cin >> filename;
-        readFromFile(studentsVector, filename);
-        readFromFile(studentsList, filename);
+        StudentFileManager::readFromFile(studentsVector, filename);
         break;
     case 3:
         std::cout << "How many records would you like to generate? \n"
@@ -57,9 +52,8 @@ int main() {
             return 1;
         }
         filename = "random_students_" + std::to_string(records) + ".txt";
-        generateFile(filename, records);
-        readFromFile(studentsVector, filename);
-        readFromFile(studentsList, filename);
+        StudentFileManager::generateFile(filename, records);
+        StudentFileManager::readFromFile(studentsVector, filename);
         break;
     default:
         std::cerr << "Invalid choice!" << std::endl;
@@ -68,35 +62,17 @@ int main() {
     end = std::chrono::high_resolution_clock::now();
     readingDuration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 
-
-    startVector = std::chrono::high_resolution_clock::now();
-    categorizeStudents(studentsVector, dummiesVector);
-    writeToFile(dummiesVector, "dummies_vector.txt");
-    writeToFile(studentsVector, "smart_vector.txt");
-    endVector = std::chrono::high_resolution_clock::now();
-    vectorDuration = std::chrono::duration_cast<std::chrono::seconds>(endVector - startVector);
-
-    startVector = std::chrono::high_resolution_clock::now();
-    categorizeStudentsremove(studentsVector, dummiesVector);
-    writeToFile(dummiesVector, "dummies_vector.txt");
-    writeToFile(studentsVector, "smart_vector.txt");
-    endVector = std::chrono::high_resolution_clock::now();
-    vectorDuration = std::chrono::duration_cast<std::chrono::seconds>(endVector - startVector);
-
-    startList = std::chrono::high_resolution_clock::now();
-    categorizeStudents(studentsList, dummiesList);
-    writeToFile(dummiesList, "dummies_list.txt");
-    writeToFile(studentsList, "smart_list.txt");
-    endList = std::chrono::high_resolution_clock::now();
-    listDuration = std::chrono::duration_cast<std::chrono::seconds>(endList - startList);
-
-
-
+    start = std::chrono::high_resolution_clock::now();
+    StudentManager::categorizeStudents(studentsVector, dummiesVector);
+    StudentFileManager::writeToFile(dummiesVector, "dummies_vector.txt");
+    StudentFileManager::writeToFile(studentsVector, "smart_vector.txt");
+    end = std::chrono::high_resolution_clock::now();
+    vectorDuration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 
     std::cout << "\nTime taken using std::vector: " << vectorDuration.count() << " seconds." << std::endl;
-    std::cout << "Time taken using std::list: " << listDuration.count() << " seconds." << std::endl;
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "\nTime taken for reading data: " << readingDuration.count() << " seconds." << std::endl;
 
     return 0;
 }
+
