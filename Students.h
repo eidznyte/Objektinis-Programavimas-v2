@@ -1,9 +1,14 @@
-#ifndef STUDENTS2_H
-#define STUDENTS2_H
-#pragma once
+#ifndef STUDENTS_H
+#define STUDENTS_H
+
 #include <string>
 #include <vector>
-#include <list>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <algorithm>
+#include <chrono>
+#include <random> 
 
 struct Student {
     std::string name;
@@ -14,20 +19,40 @@ struct Student {
     double finalScoreMed = 0;
 };
 
-void inputStudentsManually(std::vector<Student>& students);
-void displayStudents(const std::vector<Student>& students);
-void generateFile(const std::string& filename, int numStudents);
-void generateRandomScores(Student& student);
-void writeToFile(const std::vector<Student>& students, const std::string& filename);
-void readFromFile(std::vector<Student>& students, const std::string& filename);
-void inputStudentsManually(std::list<Student>& students);
-void displayStudents(const std::list<Student>& students);
-void categorizeStudents(std::vector<Student>& students, std::vector<Student>& dummies);
-void categorizeStudents(std::list<Student>& students, std::list<Student>& dummies);
-void categorizeStudentsremove(std::vector<Student>& students, std::vector<Student>& dummies);
-void writeToFile(const std::list<Student>& students, const std::string& filename);
-void readFromFile(std::list<Student>& students, const std::string& filename);
-double calculateAverage(const std::vector<int>& grades);
-double calculateMedian(std::vector<int> grades);
+class GradeStatistics {
+public:
+    static double calculateAverage(const std::vector<int>& grades);
+    static double calculateMedian(std::vector<int> grades);
+};
 
-#endif // STUDENTS2_H
+class StudentFileManager {
+public:
+    static void readFromFile(std::vector<Student>& students, const std::string& filename); 
+    static void writeToFile(const std::vector<Student>& students, const std::string& filename);
+    static void generateFile(const std::string& filename, int numStudents);
+private:
+    static void displayDuration(const std::chrono::high_resolution_clock::time_point& start,
+        const std::chrono::high_resolution_clock::time_point& end,
+        const std::string& operationName);
+};
+
+class StudentDataInput {
+public:
+    static void inputStudentsManually(std::vector<Student>& students);
+private:
+    static void generateRandomScores(Student& student);
+    static void inputHomeworkScores(Student& student);
+};
+
+class StudentManager {
+public:
+    static void categorizeStudents(std::vector<Student>& students, std::vector<Student>& dummies);
+    static void categorizeStudentsRemove(std::vector<Student>& students, std::vector<Student>& dummies);
+    static void displayStudents(const std::vector<Student>& students);
+private:
+    static void displayDuration(const std::chrono::high_resolution_clock::time_point& start,
+        const std::chrono::high_resolution_clock::time_point& end,
+        const std::string& operationName);
+};
+
+#endif // STUDENTS_H
