@@ -62,7 +62,10 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Student& student);
 };
 
-// Function declarations
+
+std::istream& operator>>(std::istream& in, Student& student);
+std::ostream& operator<<(std::ostream& out, const Student& student);
+
 void displayDuration(const std::chrono::high_resolution_clock::time_point& start,
     const std::chrono::high_resolution_clock::time_point& end,
     const std::string& operationName);
@@ -75,6 +78,5 @@ void inputStudentsManually(std::vector<Student>& students);
 void generateRandomScores(Student& student);
 void generateFile(const std::string& filename, int numStudents);
 void categorizeStudents(std::vector<Student>& students, std::vector<Student>& dummies);
-void categorizeStudentsremove(std::vector<Student>& students, std::vector<Student>& dummies);
 
 #endif // STUDENTS_H
