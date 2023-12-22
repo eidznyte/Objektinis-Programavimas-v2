@@ -1,10 +1,22 @@
+/**
+ * @file main.cpp
+ * @brief Pagrindinis programos failas, valdantis studentų duomenų įvedimą, skaitymą, generavimą ir apdorojimą.
+ */
+
 #include "Students.h"
 #include <iostream>
 #include <chrono>
 #include <iomanip>
 #include <vector>
 #include <stdexcept>
-
+/**
+ * @brief Programos įėjimo taškas.
+ *
+ * Pagrindinė funkcija, kurioje vykdomas studentų duomenų įvedimas, skaitymas iš failo,
+ * atsitiktinių studentų sąrašo generavimas, studentų kategorizavimas ir duomenų įrašymas į failus.
+ *
+ * @return int Programos grąžinimo kodas.
+ */
 int main() {
     std::vector<Student> studentsVector, dummiesVector;
 
@@ -85,3 +97,4 @@ int main() {
 
     return 0;
 }
+
