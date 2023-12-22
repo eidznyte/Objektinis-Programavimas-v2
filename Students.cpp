@@ -1,3 +1,7 @@
+/**
+ * @file Students.cpp
+ * @brief šiame faile implementuotos Student klasės ir kitos funkcijos.
+ */
 #include "Students.h"
 #include <iostream>
 #include <fstream>
@@ -12,13 +16,26 @@
 std::chrono::high_resolution_clock::time_point start;
 std::chrono::high_resolution_clock::time_point end;
 
+/**
+ * @brief Rodo operacijos veikimo laiką.
+ *
+ * @param start pradeda skaičiuoti laika.
+ * @param end baigia skaičiuoti laiką.
+ * @param operationName operacijos pavadinimas.
+ */
+
 void displayDuration(const std::chrono::high_resolution_clock::time_point& start,
     const std::chrono::high_resolution_clock::time_point& end,
     const std::string& operationName) {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     std::cout << operationName << " took " << duration << " milliseconds." << std::endl;
 }
-
+/**
+ * @brief Apskaičiuoja pažymių vidurki.
+ *
+ * @param grades pažymių vektorius.
+ * @return double pažymių vidurkio vektorius.
+ */
 double calculateAverage(const std::vector<int>& grades) {
     double sum = 0;
     for (int grade : grades) {
@@ -26,7 +43,12 @@ double calculateAverage(const std::vector<int>& grades) {
     }
     return grades.empty() ? 0 : sum / grades.size();
 }
-
+/**
+ * @brief Apskaičiuoja pažymių medianą.
+ *
+ * @param grades pažymių vektorius.
+ * @return double pažymių vidurkio vektorius.
+ */
 double calculateMedian(std::vector<int> grades) {
     size_t size = grades.size();
     if (size == 0) return 0;
@@ -36,6 +58,13 @@ double calculateMedian(std::vector<int> grades) {
 
     return size % 2 == 0 ? (grades[mid - 1] + grades[mid]) / 2.0 : grades[mid];
 }
+
+/**
+ * @brief Perskaito studentų duomenis iš failo.
+ *
+ * @param students vektorius į kurį surašomi Student objekto duomenys.
+ * @param filename failo iš kurio skaitomi duomenys pavadinimas.
+ */
 
 void readFromFile(std::vector<Student>& students, const std::string& filename) {
     std::ifstream file(filename);
@@ -54,7 +83,12 @@ void readFromFile(std::vector<Student>& students, const std::string& filename) {
 
     file.close();
 }
-
+/**
+ * @brief Surašo studentų duomenis į failą.
+ *
+ * @param students vektorius iš kurio surašomi Students objekto duomenys į failą.
+ * @param filename failo į kurį rašomi duomenys pavadinimas.
+ */
 
 
 void writeToFile(const std::vector<Student>& students, const std::string& filename) {
@@ -80,7 +114,11 @@ void writeToFile(const std::vector<Student>& students, const std::string& filena
 
     outFile.close();
 }
-
+/**
+ * @brief Duomenys įvedami rankiniu būdu.
+ *
+ * @param students vektorius į kurį ranka surašomi Student objekto duomenys.
+ */
 void inputStudentsManually(std::vector<Student>& students) {
     std::cout << "Enter the number of students: ";
     int numStudents;
@@ -125,6 +163,14 @@ void inputStudentsManually(std::vector<Student>& students) {
     }
 }
 
+/**
+ * @brief Generuoja atsitiktinius studento namų darbų ir egzamino balus.
+ *
+ * Ši funkcija kiekvienam studentui sugeneruoja atsitiktinį skaičių namų darbų balų (nuo 1 iki 20) ir kiekvienam balui priskiria atsitiktinę reikšmę (nuo 1 iki 10).
+ * Taip pat sugeneruoja atsitiktinį egzamino balą (nuo 1 iki 10). Po to apskaičiuoja ir nustato studento galutinį vidurkį ir medianą pagal sugeneruotus balus.
+ *
+ * @param student Nuoroda į Student objektą, kuriam bus generuojami balai.
+ */
 
 
 void generateRandomScores(Student& student) {
@@ -139,6 +185,13 @@ void generateRandomScores(Student& student) {
     student.setFinalScoreAvg(calculateAverage(student.getHomeworks()));
     student.setFinalScoreMed(calculateMedian(student.getHomeworks()));
 }
+
+/**
+ * @brief Sugeneruoja failą į kurį surašomi atsitiktiniai studentų duomenys.
+ *
+ * @param filename failo į kurį generuojami duomenys pavadinimas.
+ * @param numStudents skaičius studentų, kuriems generuojami duomenys.
+ */
 
 void generateFile(const std::string& filename, int numStudents) {
     std::ofstream outFile(filename);
@@ -166,6 +219,14 @@ void generateFile(const std::string& filename, int numStudents) {
     outFile.close();
 }
 
+/**
+ * @brief Suskirsto studentus į dvi grupes pagal pažymių vidurkį .
+ *
+ * Studentai, kurių pažymių vidurkis 5.0 yra dedami į 'dummies' vektorių.
+ *
+ * @param students vektorius į kurį surašomi paskirstyti duomenys.
+ * @param dummies Student objekto vektorius, paskirtas į 'dummies' .
+ */
 void categorizeStudents(std::vector<Student>& students, std::vector<Student>& dummies) {
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -187,13 +248,26 @@ void categorizeStudents(std::vector<Student>& students, std::vector<Student>& du
     auto end = std::chrono::high_resolution_clock::now();
     displayDuration(start, end, "Categorizing students with vectors");
 }
-
+/**
+ * @brief parodo studentų duomenis ekrane.
+ *
+ * @param students vektorius kurio duomenys parodomi ekrane.
+ */
 void displayStudents(const std::vector<Student>& students) {
     for (const Student& student : students) {
         std::cout << student << std::endl;
     }
 }
-
+/**
+*@brief Operatorius "Students" klasės objektams įvesti
+*
+*Šiuo operatoriumi perskaitomi studentų duomenis (vardas, pavardė, namų darbų ir egzamino rezultatai) iš input stream
+*
+*@param Nuoroda į input stream.
+*@param Nuoroda iš studento į Student objektą, kad į jį būtų įvesti duomenys
+*@return std::istream& Nuoroda į input stream perskaičius duomenis
+*
+*/
 
 std::istream& operator>>(std::istream& in, Student& student) {
     in >> std::ws;
@@ -223,7 +297,16 @@ std::istream& operator>>(std::istream& in, Student& student) {
     return in;
 }
 
-
+/**
+*@brief Operatorius "Students" klasės objektams išvesti
+*
+*Šiuo operatoriumi surašomi studentų duomenis (vardas, pavardė, namų darbų ir egzamino rezultatai) į output stream
+*
+*@param Nuoroda į output stream.
+*@param Nuoroda iš studento į Student objektą, kad į jį būtų i6vesti duomenys
+*@return std::ostream& Nuoroda į input stream perskaičius duomenis
+*
+*/
 
 std::ostream& operator<<(std::ostream& out, const Student& student) {
     out << "Name: " << student.getName() << ", Surname: " << student.getSurname()
@@ -233,7 +316,12 @@ std::ostream& operator<<(std::ostream& out, const Student& student) {
 }
 
 
-
+/**
+ * @brief Atvaizduoja studento informaciją į standartinį išvesties srautą.
+ *
+ * Ši funkcija atspausdina studento vardą, pavardę, egzamino balą, galutinį vidurkį, galutinę medianą,
+ * ir visus namų darbų balus į standartinę išvestį (paprastai - ekraną).
+ */
 
 void Student::displayInfo() const {
     std::cout << "Name: " << name
