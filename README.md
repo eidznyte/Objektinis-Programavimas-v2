@@ -12,7 +12,7 @@ Taip pat realizuota "rule of three"
 ### Programos paleidimas:
 * Programą paleisti per kodo editinimo programą (pvz. VisualStudio)
 ## Programos Struktūra:
-* Main1.1.cpp -> pagrindinis file
+* Main1.2.cpp -> pagrindinis file
 * Students1.1.cpp -> visų funkcijų file
 * Students.h -> header file
 * students.txt -> duomenų file, kuriuo naudojamasi programoje
