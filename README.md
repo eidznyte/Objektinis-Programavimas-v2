@@ -7,8 +7,8 @@
 ### Programos paleidimas:
 * Programą paleisti per kodo editinimo programą (pvz. VisualStudio)
 ## Programos Struktūra:
-* Main1.1.cpp -> pagrindinis file
-* Students1.1.cpp -> visų funkcijų file
+* Main1.5.cpp -> pagrindinis file
+* Students.cpp -> visų funkcijų file
 * Students.h -> header file
 * students.txt -> duomenų file, kuriuo naudojamasi programoje
 ## Ką daro ši programa?
