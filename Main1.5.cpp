@@ -82,6 +82,19 @@ int main() {
         std::cerr << "Error during file operations: " << e.what() << std::endl;
         return 1;
     }
+      // Rule of three parodymas
+  Student originalStudent("Petras", "Petraitis");
+  originalStudent.addHomework(9);
+  originalStudent.setExam(10);
+
+  Student copiedStudent = originalStudent;
+
+  originalStudent.addHomework(6);
+
+  std::cout << "Original Student:\n";
+  originalStudent.displayInfo();
+  std::cout << "Copied Student:\n";
+  copiedStudent.displayInfo();
 
     return 0;
 }
