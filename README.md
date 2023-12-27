@@ -1,8 +1,13 @@
 # Objektinis-programavimas
 ## Programos aprašymas
-Šiame release programoje atsirado operatoriai _operator>>_ ir _operator<<_.
+Šiame release programoje atsirado įvesties ir išvesties operatoriai _operator>>_ ir _operator<<_.
+Taip pat realizuota "rule of three"
 * _operator>>_ perskaito duomenis į "Student" objektą.
 * _operator<<_ surašo duomenis iš "Student" objekto.
+### "rule of three" implementacija
+* Kopijavimo konstruktorius – sukuria naują "Student" objektą kaip esamo kopiją.
+* Priskirimo operatorius – priskiria vieną "Student" objektą kitam.
+* Destruktorius – sunaikina "Student" objektą, išskleisdamas jo duomenis.
 ## Programos naudojimas
 ### Programos paleidimas:
 * Programą paleisti per kodo editinimo programą (pvz. VisualStudio)
